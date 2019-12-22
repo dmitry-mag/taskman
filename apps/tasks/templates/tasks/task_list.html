@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Заявка</th>
+        <th scope="col">Дата</th>
+        <th scope="col">Заключение СП</th>
+        <th scope="col">Дата заключения</th>
+        <th scope="col">Исполнено</th>
+        <th scope="col">Дата исполнено</th>
+        <th scope="col">Статус</th>
+        <th scope="col">Инфо</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for task in task_list %}
+      <tr>
+        <th scope="row">{{ task.pk }}</th>
+        <td>{{ task.name }}</td>
+        <td>{{ task.signed }}</td>
+        <td>{% if task.conclusion %}{{ task.conclusion }}{% else %}-{% endif %}</td>
+        <td>{% if task.conclusion_date %}{{ task.conclusion_date }}{% else %}-{% endif %}</td>
+        <td>{% if task.ready %}{{ task.ready }}{% else %}-{% endif %}</td>
+        <td>{% if task.ready_date %}{{ task.ready_date }}{% else %}-{% endif %}</td>
+        <td>{{ task.get_status_display }}</td>
+        <td>{% if task.info %}{{ task.info }}{% else %}-{% endif %}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+<!-- <div class="row">
+    {% for task in task_list %}
+    <div class="col-sm">
+        {{ task.name }}
+    </div>
+    {% endfor %}
+</div> -->
+{% endblock content %}
