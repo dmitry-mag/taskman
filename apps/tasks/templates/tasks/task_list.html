@@ -1,5 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
+  <form method="GET">
+    <div id="div_id_signed" class="form-group">
+       <label for="id_signed" class=" requiredField">Дата подписи</label>
+       <div class="">
+         <input type="text" name="signed" class="dateinput form-control" id="signed">
+       </div>
+     </div>
+     <button class="btn" type="submit">Отфильтровать</button>
+  </form>
+<a class="btn my-3" href="{% url 'tasks:create' %}">Добавить заявку</a> 
 <table class="table">
     <thead>
       <tr>
@@ -12,13 +22,15 @@
         <th scope="col">Дата исполнено</th>
         <th scope="col">Статус</th>
         <th scope="col">Инфо</th>
+        <th scope="col">Изменить</th>
+        <th scope="col">Удалить</th>
       </tr>
     </thead>
     <tbody>
-    {% for task in task_list %}
+    {% for task in tasks %}
       <tr>
         <th scope="row">{{ task.pk }}</th>
-        <td>{{ task.name }}</td>
+        <td><a href="{% url 'tasks:detail' task.pk %}">{{ task.name }}</a></td>
         <td>{{ task.signed }}</td>
         <td>{% if task.conclusion %}{{ task.conclusion }}{% else %}-{% endif %}</td>
         <td>{% if task.conclusion_date %}{{ task.conclusion_date }}{% else %}-{% endif %}</td>
@@ -26,6 +38,8 @@
         <td>{% if task.ready_date %}{{ task.ready_date }}{% else %}-{% endif %}</td>
         <td>{{ task.get_status_display }}</td>
         <td>{% if task.info %}{{ task.info }}{% else %}-{% endif %}</td>
+        <td><a href="{% url 'tasks:update' task.pk %}">Изменить</a></td>
+        <td><a href="{% url 'tasks:delete' task.pk %}">Удалить</a></td>
       </tr>
     {% endfor %}
     </tbody>
